@@ -40,7 +40,8 @@ ITBL CKOP_MENU::itbl[] = {
 //             4: Xを(IMG_WID-基準WID)分オフセットする
 //             8: Yを(IMG_HEI-基準HEI)分オフセットする
 CTBL CKOP_MENU::ctbl[] = {
-	{ 0, 0  , IDC_STATIC40, 0, "LOGO"              ,1140,  10, 159,108, WS_BORDER|0|SS_CENTERIMAGE|SS_BITMAP},
+	{ 0, 0  , IDC_STATIC40, 0, "LOGO"              ,1140,  90, 159,108, WS_BORDER|0|SS_CENTERIMAGE|SS_BITMAP},
+	{ 0, 0  , IDC_BUTTON40, 0, "シェーディング解析拡張",1140,  10, 140, 70},
 	{ 0, 0  , IDC_BUTTON1 , 0, "シェーディング解析", 990,  10, 140, 70},
 	{ 0, 0  , IDC_BUTTON2 , 0, "倍率解析"          , 990,  90, 140, 70},
 	{ 0, 0  , IDC_BUTTON3 , 0, "ＭＴＦ解析"        , 990, 170, 140, 70},
@@ -425,6 +426,10 @@ BOOL CKOP_MENU::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_C
 			CKOP::MOVE_FORM(pWndForm, 1);
 			return(TRUE);
 		break;*/
+		case IDC_BUTTON40://シェーディング解析拡張
+			CKOP::MOVE_FORM(pWndForm, 8);
+			return(TRUE);
+		break;
 		}
 	break;
 	case WM_CTLCOLOR:

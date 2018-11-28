@@ -9,6 +9,7 @@
 #include "KOP.h"
 #include "KOP_MENU.h"
 #include "KOP_SHADING.h"
+#include "KOP_SHADING_EX.h"
 #include "KOP_CIRCLE.h"
 #include "KOP_SCALE.h"
 #include "KOP_MTF.h"
@@ -85,6 +86,9 @@ CBitmap	CKOP::BMP_DEF;
 CBrush	CKOP::m_brsBack;
 CPen	CKOP::m_penRed;
 CPen	CKOP::m_penGreen;
+CPen	CKOP::m_penYellow;
+CPen	CKOP::m_penPink;
+CPen	CKOP::m_penWater;
 CPen	CKOP::m_penRedDot;
 CPen	CKOP::m_penGreenDot;
 
@@ -420,6 +424,7 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 #if 1//2017.04.01
 	case 7: CKOP_ROLL   ::TERM_FORM(); break;
 #endif
+	case 8: CKOP_SHADING_EX::TERM_FORM(); break;
 	}
 	if (CKOP::STAT_OF_ANALYSE > 0) {
 	CKOP::DESTROY_FORM(pWndForm);
@@ -461,11 +466,16 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 		pit = CKOP_ROLL::itbl;
 	break;
 #endif
+	case 8:
+		pct = CKOP_SHADING_EX::ctbl;
+		pit = CKOP_SHADING_EX::itbl;
+	break;
 	}
 	//----------
 	if (CKOP::STAT_OF_ANALYSE <= 0) {
 #if 1//2015.09.10
 		CKOP_SHADING::TERM_CORRECTION();
+		CKOP_SHADING_EX::TERM_CORRECTION();
 #endif
 		return;
 	}
@@ -500,6 +510,9 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 #if 1//2017.04.01
 	case 7:
 		CKOP_ROLL::INIT_FORM(pWndForm);
+	break;
+	case 8:
+		CKOP_SHADING_EX::INIT_FORM(pWndForm);
 	break;
 #endif
 	}
@@ -825,6 +838,7 @@ void CKOP::PRESET_SIZE(LPBITMAPINFO pBmpInfo)
 	//CKOP::m_pnt_g.y = GetProfileInt("SAVED", "GBAR:Y", BASE_HEI/2-10);
 #if 1//2015.09.10
 	CKOP_SHADING::INIT_CORRECTION();
+	CKOP_SHADING_EX::INIT_CORRECTION();
 	return(TRUE);
 #endif
 }
@@ -857,6 +871,16 @@ void CKOP::PRESET(CWnd* pWndForm)
 		m_penBlue.DeleteObject();
 	}
 #endif
+
+	if (m_penYellow.GetSafeHandle()) {
+		m_penYellow.DeleteObject();
+	}
+	if (m_penPink.GetSafeHandle()) {
+		m_penPink.DeleteObject();
+	}
+	if (m_penWater.GetSafeHandle()) {
+		m_penWater.DeleteObject();
+	}
 	//20160509 Hirota add to draw blue ROI.(MTF) Start
 	/*
 	if (m_penBlueDot.GetSafeHandle()) {
@@ -875,6 +899,9 @@ void CKOP::PRESET(CWnd* pWndForm)
 
 	m_penRed     .CreatePen(PS_SOLID, 1 , RGB(255,0,0));
 	m_penGreen   .CreatePen(PS_SOLID, 1 , RGB(0,255,0));
+	m_penYellow  .CreatePen(PS_SOLID, 1 , RGB(255,255,0));
+	m_penPink    .CreatePen(PS_SOLID, 1 , RGB(255,0,255));
+	m_penWater   .CreatePen(PS_SOLID, 1 , RGB(0,255,255));
 	m_penRedDot  .CreatePen(PS_DOT  , 1 , RGB(64,255,255));
 	m_penGreenDot.CreatePen(PS_DOT  , 1 , RGB(0,0,255));
 
@@ -1108,7 +1135,14 @@ void CKOP::SAVE_WINDOW(CWnd *pWnd, LPCTSTR pszFileName)
 	if (path.Right(1) != "\\") {
 		path += "\\";
 	}
+
+#if 0//change 18/11/08(木) 16:16:09
 	path += CKOP::SERIALNO;
+#else
+	CString buf;
+	pWnd->GetDlgItemText(IDC_EDIT19, buf);
+	path += buf;
+#endif
 	path += "_";
 	path += pszFileName;
 
@@ -1202,6 +1236,9 @@ void CKOP::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo)
 		CKOP_ROLL::ON_DRAW_STA(pWndForm,  pImgPxl, pbmpinfo);
 	break;
 #endif
+	case 8://シェーディング画面拡張
+		CKOP_SHADING_EX::ON_DRAW_STA(pWndForm,  pImgPxl, pbmpinfo);
+	break;
 	default://OpenCVテスト画面
 	break;
 	}
@@ -1245,6 +1282,9 @@ void CKOP::ON_DRAW_END(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo)
 		CKOP_ROLL::ON_DRAW_END(pWndForm,  pImgPxl, pbmpinfo);
 	break;
 #endif
+	case 8://シェーディング画面拡張
+		CKOP_SHADING_EX::ON_DRAW_END(pWndForm,  pImgPxl, pbmpinfo);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 }
@@ -1284,6 +1324,9 @@ BOOL CKOP::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_CMDHAN
 		ret = CKOP_ROLL::CMD_MSG(pWndForm, nID, nCode, pExtra, pHandlerInfo);
 	break;
 #endif
+	case 8:
+		ret = CKOP_SHADING_EX::CMD_MSG(pWndForm, nID, nCode, pExtra, pHandlerInfo);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 	return(ret);
@@ -1322,6 +1365,9 @@ BOOL CKOP::MSG_PROC(CWnd* pWndForm, MSG* pMsg)
 		ret = CKOP_ROLL::MSG_PROC(pWndForm, pMsg);
 	break;
 #endif
+	case 8:
+		ret = CKOP_SHADING_EX::MSG_PROC(pWndForm, pMsg);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 	return(ret);

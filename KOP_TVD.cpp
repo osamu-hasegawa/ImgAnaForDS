@@ -4,6 +4,7 @@
 #include "KOP_TVD.h"
 #if 1//2015.09.10
 #include "KOP_SHADING.h"
+#include "KOP_SHADING_EX.h"
 #endif
 #include <math.h>
 
@@ -118,6 +119,8 @@ CTBL CKOP_TVD::ctbl[] = {
 	{ 0, 8  , IDC_STATIC37, 0, "GRAPH"             ,  10, 553+1, 810, 60, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|SS_WHITEFRAME},//SS_WHITEFRAME},
 	{ 0, 8  , IDC_STATIC38, 0, "COORDINATES"       ,  10, 613+2, 810, 35, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|SS_WHITEFRAME},//SS_WHITEFRAME},
 	{ 0, 8  , IDC_STATIC39, 0, "GRAPH"             ,  10, 648+3, 810, 60, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|SS_WHITEFRAME},//SS_WHITEFRAME},
+	{ 0, 0  , IDC_STATIC  , 1, "•Û‘¶ƒtƒ@ƒCƒ‹–¼"    , 900, 610, 140, 20, 0|SS_CENTERIMAGE},
+	{ 0, 0  , IDC_EDIT19  , 0, ""                  , 900, 630, 250, 30, WS_BORDER},
 	{ 0, 0  ,            0, 0, NULL}
 };
 #if 1//2017.04.01
@@ -164,7 +167,7 @@ void CKOP_TVD::INIT_FORM(CWnd *pWndForm)
 	CKOP::P_BIN_IMG = m_d.P_BIN_IMG;
 
 	m_d.P_SHAD_CORR = GetProfileINT("TVD", "SHAD_CORR" , 0);
-	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION()) {
+	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION() || !CKOP_SHADING_EX::IS_AVAILABLE_CORRECTION()) {
 		 m_d.P_SHAD_CORR = 0;
 		 pWndForm->GetDlgItem(IDC_CHECK2)->EnableWindow(FALSE);
 	}
@@ -902,6 +905,7 @@ void CKOP_TVD::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo
 	m_d.P_SHAD_CORR = pWndForm->IsDlgButtonChecked(IDC_CHECK2);
 	if (m_d.P_SHAD_CORR) {
 		CKOP_SHADING::DO_CORRECTION(pImgPxl);
+		CKOP_SHADING_EX::DO_CORRECTION(pImgPxl);
 	}
 #endif
 //	DO_FILTER(pWndForm, pImgPxl);
@@ -1032,7 +1036,11 @@ BOOL CKOP_TVD::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_CM
 	case BN_CLICKED:
 		switch (nID) {
 		case IDC_BUTTON7://•Û‘¶
+#if 0
 			CKOP::SAVE_WINDOW(AfxGetMainWnd(), "dist.png");
+#else
+			CKOP::SAVE_WINDOW(pWndForm, "dist.png");
+#endif
 #if 1//2017.07.18
 			{
 				CCSV	csv;

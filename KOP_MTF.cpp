@@ -9,6 +9,7 @@
 #include "KOP_MTF.h"
 #if 1//2015.09.10
 #include "KOP_SHADING.h"
+#include "KOP_SHADING_EX.h"
 #endif
 #include "math.h"
 
@@ -219,6 +220,8 @@ CTBL CKOP_MTF::ctbl[] = {
 	{ 0, 0  , IDC_BUTTON15, 0, "オート検出"        ,1120, 305, 240, 50},
 	{ 0, 0  , IDC_BUTTON16, 0, "連続測定"          ,1120, 360, 240, 50},
 #endif
+	{ 0, 0  , IDC_STATIC  , 1, "保存ファイル名"    , 685, 610, 140, 20, 0|SS_CENTERIMAGE},
+	{ 0, 0  , IDC_EDIT19  , 0, ""                  , 685, 630, 250, 30, WS_BORDER},
 	{ 0, 0  ,            0, 0, NULL}
 };
 
@@ -392,7 +395,7 @@ void CKOP_MTF::INIT_FORM(CWnd *pWndForm)
 #endif
 #if 1//2015.09.10
 	m_d.P_SHAD_CORR = GetProfileINT("MTF", "SHAD_CORR" , 0);
-	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION()) {
+	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION() || !CKOP_SHADING_EX::IS_AVAILABLE_CORRECTION()) {
 		 m_d.P_SHAD_CORR = 0;
 		 pWndForm->GetDlgItem(IDC_CHECK3)->EnableWindow(FALSE);
 	}
@@ -1167,6 +1170,7 @@ void CKOP_MTF::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo
 	m_d.P_SHAD_CORR = pWndForm->IsDlgButtonChecked(IDC_CHECK3);
 	if (m_d.P_SHAD_CORR) {
 		CKOP_SHADING::DO_CORRECTION(pImgPxl);
+		CKOP_SHADING_EX::DO_CORRECTION(pImgPxl);
 	}
 #endif
 	CALC_MTF(pImgPxl);
@@ -1206,7 +1210,11 @@ BOOL CKOP_MTF::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_CM
 	case BN_CLICKED:
 		switch (nID) {
 		case IDC_BUTTON7://保存
+#if 0
 			CKOP::SAVE_WINDOW(AfxGetMainWnd(), "mtf.png");
+#else
+			CKOP::SAVE_WINDOW(pWndForm, "mtf.png");
+#endif
 #if 1//2017.07.18
 			{
 				CCSV	csv;

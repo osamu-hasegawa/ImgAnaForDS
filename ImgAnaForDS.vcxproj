@@ -174,7 +174,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\opencv2411\opencv\build\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\opencv;C:\opencv2411\opencv\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -216,6 +216,7 @@
   <ItemGroup>
     <ClInclude Include="DlgProgress.h" />
     <ClInclude Include="KOP_ROLL.h" />
+    <ClInclude Include="KOP_SHADING_EX.h" />
     <ClInclude Include="PluginDll.h" />
     <ClInclude Include="CSV.h" />
     <ClInclude Include="DglSelDevice.h" />
@@ -266,6 +267,7 @@
     <ClCompile Include="KOP_ROLL.cpp" />
     <ClCompile Include="KOP_SCALE.cpp" />
     <ClCompile Include="KOP_SHADING.cpp" />
+    <ClCompile Include="KOP_SHADING_EX.cpp" />
     <ClCompile Include="KOP_TVD.cpp" />
     <ClCompile Include="Lsq.cpp" />
     <ClCompile Include="MainFrm.cpp" />

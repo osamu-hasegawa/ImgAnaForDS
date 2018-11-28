@@ -9,6 +9,7 @@
 #include "KOP.h"
 #include "KOP_ROLL.h"
 #include "KOP_SHADING.h"
+#include "KOP_SHADING_EX.h"
 #include "KOP_CIRCLE.h"
 #include <math.h>
 
@@ -147,6 +148,8 @@ CTBL CKOP_ROLL::ctbl[] = {
 	{ 0, 0  , IDC_BUTTON7 , 0, "•Û‘¶"              , 990, 500, 140, 50},
 	{ 0, 0  , IDC_BUTTON8 , 0, "–ß‚é"              , 990, 560, 140, 50},
 	{ 0, 2+4, IDC_STATIC10, 0, "\0GRAPH"             , 660,  30,  50,482, 0|SS_CENTER|SS_CENTERIMAGE|SS_USERITEM},//WS_BORDER},//SS_WHITEFRAME},
+	{ 0, 0  , IDC_STATIC  , 1, "•Û‘¶ƒtƒ@ƒCƒ‹–¼"    , 685, 610, 140, 20, 0|SS_CENTERIMAGE},
+	{ 0, 0  , IDC_EDIT19  , 0, ""                  , 685, 630, 250, 30, WS_BORDER},
 	{ 0, 0  ,            0, 0, NULL}
 };
 #if 1//2017.04.01
@@ -196,7 +199,7 @@ void CKOP_ROLL::INIT_FORM(CWnd *pWndForm)
 	m_d.P_CSR_LT    = GetProfileINT("ROLL", "CSR_LT"   , 100);
 	m_d.P_CSR_RT    = GetProfileINT("ROLL", "CSR_RT"   ,   0);
 	m_d.P_SHAD_CORR = GetProfileINT("ROLL", "SHAD_CORR",   0);
-	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION()) {
+	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION() || !CKOP_SHADING_EX::IS_AVAILABLE_CORRECTION()) {
 		 m_d.P_SHAD_CORR = 0;
 		 pWndForm->GetDlgItem(IDC_CHECK2)->EnableWindow(FALSE);
 	}
@@ -741,6 +744,7 @@ void CKOP_ROLL::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinf
 	m_d.P_SHAD_CORR = pWndForm->IsDlgButtonChecked(IDC_CHECK2);
 	if (m_d.P_SHAD_CORR) {
 		CKOP_SHADING::DO_CORRECTION(pImgPxl);
+		CKOP_SHADING_EX::DO_CORRECTION(pImgPxl);
 	}
 	//-----
 	m_d.P_BIN_VAL = pWndForm->GetDlgItemInt(IDC_EDIT1);
@@ -764,7 +768,11 @@ BOOL CKOP_ROLL::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_C
 	case BN_CLICKED:
 		switch (nID) {
 		case IDC_BUTTON7://•Û‘¶
+#if 0
 			CKOP::SAVE_WINDOW(AfxGetMainWnd(), "roll.png");
+#else
+			CKOP::SAVE_WINDOW(pWndForm, "roll.png");
+#endif
 #if 1//2017.07.18
 			{
 				CCSV	csv;

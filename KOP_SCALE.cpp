@@ -7,6 +7,7 @@
 #include "KOP.h"
 #include "KOP_SCALE.h"
 #include "KOP_SHADING.h"
+#include "KOP_SHADING_EX.h"
 #include <math.h>
 
 #include "opencv/cv.h"
@@ -125,6 +126,8 @@ CTBL CKOP_SCALE::ctbl[] = {
 	{ 0, 0  , IDC_BUTTON7 , 0, "•Û‘¶"              , 990, 500, 140, 50},
 	{ 0, 0  , IDC_BUTTON8 , 0, "–ß‚é"              , 990, 560, 140, 50},
 	{ 0, 8  , IDC_STATIC37, 0, "GRAPH"             ,  10, 518, 810, 90, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|SS_WHITEFRAME},
+	{ 0, 0  , IDC_STATIC  , 1, "•Û‘¶ƒtƒ@ƒCƒ‹–¼"    , 685, 610, 140, 20, 0|SS_CENTERIMAGE},
+	{ 0, 0  , IDC_EDIT19  , 0, ""                  , 685, 630, 250, 30, WS_BORDER},
 	{ 0, 0  ,            0, 0, NULL}
 };
 
@@ -195,7 +198,7 @@ void CKOP_SCALE::INIT_FORM(CWnd *pWndForm)
 	m_d.P_FILTER    = GetProfileINT("SCALE", "FILTER", 1);
 	m_d.P_PARAM     = GetProfileINT("SCALE", "PARAM" , 0);
 	m_d.P_SHAD_CORR = GetProfileINT("SCALE", "SHAD_CORR" , 0);
-	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION()) {
+	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION() || !CKOP_SHADING_EX::IS_AVAILABLE_CORRECTION()) {
 		 m_d.P_SHAD_CORR = 0;
 		 pWndForm->GetDlgItem(IDC_CHECK2)->EnableWindow(FALSE);
 	}
@@ -572,10 +575,12 @@ void CKOP_SCALE::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpin
 	m_d.P_SHAD_CORR = pWndForm->IsDlgButtonChecked(IDC_CHECK2);
 	if (m_d.P_SHAD_CORR) {
 		CKOP_SHADING::DO_CORRECTION(pImgPxl);
+		CKOP_SHADING_EX::DO_CORRECTION(pImgPxl);
 	}
 
 	//-----
 	CKOP_SHADING::DO_FILTER(pWndForm, pImgPxl, m_d.P_FILTER, m_d.P_PARAM);
+	CKOP_SHADING_EX::DO_FILTER(pWndForm, pImgPxl, m_d.P_FILTER, m_d.P_PARAM);
 	CALC_SCALE(pImgPxl);
 }
 
@@ -596,7 +601,11 @@ BOOL CKOP_SCALE::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_
 	case BN_CLICKED:
 		switch (nID) {
 		case IDC_BUTTON7://•Û‘¶
+#if 0
 			CKOP::SAVE_WINDOW(AfxGetMainWnd(), "mag.png");
+#else
+			CKOP::SAVE_WINDOW(pWndForm, "mag.png");
+#endif
 #if 1//2017.07.18
 			{
 				CCSV	csv;

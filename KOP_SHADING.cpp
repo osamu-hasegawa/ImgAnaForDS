@@ -84,7 +84,8 @@ CTBL CKOP_SHADING::ctbl[] = {
 #if 1//2017.04.01
 	{ 0, 0  , IDC_STATIC  , 5, "周辺無視範囲"      , 670, 100, 200, 22, WS_BORDER|SS_CENTERIMAGE},
 	{ 0, 0  , IDC_STATIC  , 5, "ゴミ除去"          , 670, 130, 200, 22, WS_BORDER|SS_CENTERIMAGE},
-	{ 0, 0  , IDC_EDIT1   , 5, "0"                 , 900, 100, 200, 30, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|ES_NUMBER},
+//	{ 0, 0  , IDC_EDIT1   , 5, "0"                 , 900, 100, 200, 30, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|ES_NUMBER},
+	{ 0, 0  , IDC_EDIT1   , 5, "999"                 , 500,   3, 100, 22, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|ES_NUMBER},
 	{ 0, 0  , IDC_SPIN1   , 0, (LPCTSTR)(0|10<<16),   0,   0,   0,  0, UDS_SETBUDDYINT|UDS_ALIGNRIGHT},
 	{ 0, 0  , IDC_EDIT2   , 5, "0"                 , 900, 130, 200, 30, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|ES_NUMBER},
 	{ 0, 0  , IDC_SPIN2   , 0, (LPCTSTR)(0|255<<16),   0,   0,   0,  0, UDS_SETBUDDYINT|UDS_ALIGNRIGHT},
@@ -140,6 +141,8 @@ CTBL CKOP_SHADING::ctbl[] = {
 	{ 0, 0  , IDC_BUTTON7 , 0, "保存"              , 990, 500, 140, 50},
 	{ 0, 0  , IDC_BUTTON8 , 0, "戻る"              , 990, 560, 140, 50},
 	{ 0, 8  , IDC_STATIC37, 0, "GRAPH"             ,  10, 518, 810, 90, WS_BORDER|SS_CENTER|SS_CENTERIMAGE|SS_WHITEFRAME},//SS_WHITEFRAME},
+	{ 0, 0  , IDC_STATIC  , 1, "保存ファイル名"    , 685, 610, 140, 20, 0|SS_CENTERIMAGE},
+	{ 0, 0  , IDC_EDIT19  , 0, ""                  , 685, 630, 250, 30, WS_BORDER},
 	{ 0, 0  ,            0, 0, NULL}
 };
 #else
@@ -326,6 +329,15 @@ void CKOP_SHADING::INIT_FORM(CWnd *pWndForm)
 		pWndForm->GetDlgItem(IDC_STATIC24)->ShowWindow(SW_HIDE);
 		pWndForm->GetDlgItem(IDC_STATIC25)->ShowWindow(SW_HIDE);
 	break;
+	}
+	
+	if(n4 == 1)
+	{
+		m_d.P_DIAGO = 1;
+	}
+	else
+	{
+		m_d.P_DIAGO = 0;
 	}
 	
 	pWndForm->Invalidate();
@@ -1240,6 +1252,23 @@ void COLOR_MAP(LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo)
 		}
 	break;
 	case 0://生画像
+#if 1
+	if (CKOP::BMP_BIT_CNT == 8) {
+		for (int i = 0; i < 256; i++) {
+			if (i < m_d.P_GABVAL) {
+				CKOP::RGB_TBL2[i].rgbBlue  =  0;
+				CKOP::RGB_TBL2[i].rgbGreen =  0;
+				CKOP::RGB_TBL2[i].rgbRed   =255;
+			}
+			else {
+				CKOP::RGB_TBL2[i].rgbBlue  =  i;
+				CKOP::RGB_TBL2[i].rgbGreen =  i;
+				CKOP::RGB_TBL2[i].rgbRed   =  i;
+			}
+		}
+	}
+	break;
+#endif
 	default:
 	break;
 	}
@@ -1324,7 +1353,11 @@ BOOL CKOP_SHADING::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AF
 	case BN_CLICKED:
 		switch (nID) {
 		case IDC_BUTTON7://保存
+#if 0
 			CKOP::SAVE_WINDOW(AfxGetMainWnd(), "shading.png");
+#else
+			CKOP::SAVE_WINDOW(pWndForm, "shading.png");
+#endif
 #if 1//2017.07.18
 			{
 				CCSV	csv;

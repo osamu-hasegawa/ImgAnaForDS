@@ -102,7 +102,6 @@ public:
 	BYTE	IMG_DEF[2448*2048*4];
 #endif
 
-
 	static
 	CPen	m_penBlue;
 
@@ -112,6 +111,12 @@ public:
 	CPen	m_penRed;
 	static
 	CPen	m_penGreen;
+	static
+	CPen	m_penYellow;
+	static
+	CPen	m_penPink;
+	static
+	CPen	m_penWater;
 	static
 	CPen	m_penRedDot;
 	static

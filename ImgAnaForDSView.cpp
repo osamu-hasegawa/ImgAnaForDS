@@ -622,18 +622,18 @@ LRESULT CImgAnaForDSView::DrawImage(HDC hDC)//@@Hirota 最初に画像を描画
 				bm.bmiColors[i].rgbReserved = 0;
 			}
 #if 1//2017.04.01
-			if (CKOP::STAT_OF_ANALYSE == 2 && CKOP::P_COLMAP == 0) {
+			if ((CKOP::STAT_OF_ANALYSE == 2 || CKOP::STAT_OF_ANALYSE == 8) && CKOP::P_COLMAP == 0) {
 			::SetDIBColorTable(hDC, 0, 256, CKOP::RGB_TBL2);
 			memcpy(bm.bmiColors, CKOP::RGB_TBL2, sizeof(bm.bmiColors));
 			}
 			else
 #endif
 #if 1//_KOP_
-			if (CKOP::STAT_OF_ANALYSE == 2 && CKOP::P_COLMAP == 1) {
+			if ((CKOP::STAT_OF_ANALYSE == 2 || CKOP::STAT_OF_ANALYSE == 8) && CKOP::P_COLMAP == 1) {
 			::SetDIBColorTable(hDC, 0, 256, CKOP::RGB_TBL1);
 			memcpy(bm.bmiColors, CKOP::RGB_TBL1, sizeof(bm.bmiColors));
 			}
-			else if (CKOP::STAT_OF_ANALYSE == 2 && CKOP::P_COLMAP == 2) {
+			else if ((CKOP::STAT_OF_ANALYSE == 2 || CKOP::STAT_OF_ANALYSE == 8) && CKOP::P_COLMAP == 2) {
 			::SetDIBColorTable(hDC, 0, 256, CKOP::RGB_TBL2);
 			memcpy(bm.bmiColors, CKOP::RGB_TBL2, sizeof(bm.bmiColors));
 			}
@@ -1014,6 +1014,7 @@ void CImgAnaForDSView::OnButtons(UINT nID)
 	case 3://面積＆重心
 	case 4://倍率解析
 	case 5://ＭＴＦ解析
+	case 8://シェーデング解析拡張
 	default:
 		mlog("nID=%d", nID);
 	break;

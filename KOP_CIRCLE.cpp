@@ -4,6 +4,7 @@
 #include "KOP_CIRCLE.h"
 #if 1//2015.09.10
 #include "KOP_SHADING.h"
+#include "KOP_SHADING_EX.h"
 #endif
 #include "math.h"
 
@@ -197,6 +198,8 @@ CTBL CKOP_CIRCLE::ctbl[] = {
 	{ 0, 0  , IDC_BUTTON15, 0, "オート検出"        ,1120+40, 305, 240, 50},
 	{ 0, 0  , IDC_BUTTON16, 0, "連続測定"          ,1120+40, 360, 240, 50},
 #endif
+	{ 0, 0  , IDC_STATIC  , 1, "保存ファイル名"    , 685, 610, 140, 20, 0|SS_CENTERIMAGE},
+	{ 0, 0  , IDC_EDIT19  , 0, ""                  , 685, 630, 250, 30, WS_BORDER},
 	{ 0, 0  ,            0, 0, NULL}
 };
 #if 1//2017.04.01
@@ -276,7 +279,7 @@ void CKOP_CIRCLE::INIT_FORM(CWnd *pWndForm)
 		CHECK_FIXED(pWndForm);
 	}
 #endif
-	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION()) {
+	if (!CKOP_SHADING::IS_AVAILABLE_CORRECTION() || !CKOP_SHADING_EX::IS_AVAILABLE_CORRECTION()) {
 		 m_d.P_SHAD_CORR = 0;
 		 pWndForm->GetDlgItem(IDC_CHECK2)->EnableWindow(FALSE);
 	}
@@ -732,6 +735,7 @@ void CKOP_CIRCLE::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpi
 	m_d.P_SHAD_CORR = pWndForm->IsDlgButtonChecked(IDC_CHECK2);
 	if (m_d.P_SHAD_CORR) {
 		CKOP_SHADING::DO_CORRECTION(pImgPxl);
+		CKOP_SHADING_EX::DO_CORRECTION(pImgPxl);
 	}
 #endif
 	CALC_GRAV(pWndForm, pImgPxl);
@@ -756,7 +760,12 @@ BOOL CKOP_CIRCLE::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX
 	case BN_CLICKED:
 		switch (nID) {
 		case IDC_BUTTON7://保存
+#if 0
 			CKOP::SAVE_WINDOW(AfxGetMainWnd(), "center.png");
+#else
+			CKOP::SAVE_WINDOW(pWndForm, "center.png");
+#endif
+
 #if 1//2017.07.18
 			{
 				CCSV	csv;
