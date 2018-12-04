@@ -52,6 +52,7 @@ public:
 	static
 	void SET_CSV(CCSV *pc);
 #endif
-
+	static
+	HBRUSH CTL_COLOR(CDC *pDC, CWnd* pWnd);
 };
 

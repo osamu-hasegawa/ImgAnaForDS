@@ -1395,6 +1395,9 @@ HBRUSH CKOP::CTL_COLOR(CDC *pDC, CWnd* pWnd)
 	HBRUSH	ret = NULL;
 
 	switch (CKOP::STAT_OF_ANALYSE) {
+	case 8:
+		ret = CKOP_SHADING_EX::CTL_COLOR(pDC, pWnd);
+	break;
 	case 10:
 //		ret = CKOP_3DMAIN::CTL_COLOR(pDC, pWnd);
 	break;

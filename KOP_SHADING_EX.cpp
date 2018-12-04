@@ -2330,6 +2330,27 @@ pWndForm->Invalidate(FALSE);
 	return(FALSE);
 }
 
+HBRUSH CKOP_SHADING_EX::CTL_COLOR(CDC *pDC, CWnd* pWnd)
+{
+	UINT nID = pWnd->GetDlgCtrlID();
+	switch (nID) {
+	case IDC_STATIC5:
+	case IDC_STATIC31:
+		pDC->SetTextColor(RGB(0,255,0));   // ï∂éöêFÇÕóŒ
+	break;
+	case IDC_STATIC6:
+	case IDC_STATIC32:
+		pDC->SetTextColor(RGB(255,0,0));   // ï∂éöêFÇÕê‘
+	break;
+	case IDC_STATIC7:
+	case IDC_STATIC33:
+		pDC->SetTextColor(RGB(0,0,255));   // ï∂éöêFÇÕê‘
+	break;
+	}
+
+	return NULL;
+}
+
 BOOL CKOP_SHADING_EX::MSG_PROC(CWnd* pWndForm, MSG* pMsg)
 {
 	UINT	nID;
