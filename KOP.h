@@ -226,7 +226,7 @@ public:
 	void SAVE_WINDOW(CWnd *pWnd, LPCTSTR pszFileName);
 #if 1//2017.07.18
 	static
-	void SAVE_CSV(CCSV *p, LPCTSTR pszFileName);
+	void SAVE_CSV(CWnd *pWnd, CCSV *p, LPCTSTR pszFileName);
 #endif
 #if 1//2018.05.01
 	static

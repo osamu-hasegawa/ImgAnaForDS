@@ -1362,7 +1362,7 @@ BOOL CKOP_SHADING::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AF
 			{
 				CCSV	csv;
 				SET_CSV(&csv);
-				CKOP::SAVE_CSV(&csv, "shading.csv");
+				CKOP::SAVE_CSV(pWndForm, &csv, "shading.csv");
 			}
 #endif
 			return(TRUE);

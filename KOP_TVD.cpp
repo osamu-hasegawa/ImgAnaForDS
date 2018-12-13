@@ -1045,7 +1045,7 @@ BOOL CKOP_TVD::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_CM
 			{
 				CCSV	csv;
 				SET_CSV(&csv);
-				CKOP::SAVE_CSV(&csv, "dist.csv");
+				CKOP::SAVE_CSV(pWndForm, &csv, "dist.csv");
 			}
 #endif
 			return(TRUE);

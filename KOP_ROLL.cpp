@@ -777,7 +777,7 @@ BOOL CKOP_ROLL::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_C
 			{
 				CCSV	csv;
 				SET_CSV(&csv);
-				CKOP::SAVE_CSV(&csv, "roll.csv");
+				CKOP::SAVE_CSV(pWndForm, &csv, "roll.csv");
 			}
 #endif
 			return(TRUE);

@@ -1043,7 +1043,6 @@ void CALC_SHADING_CROSS(LPBYTE pImgPxl, CWnd *pWndForm)
 	if(subCount == 0)
 	{
 		subCount = 1;//0œŽZ‰ñ”ð
-		pWndForm->SetDlgItemInt(IDC_EDIT20, subCount);
 	}
 	else if(subCount > CKOP::BMP_WID)
 	{
@@ -1216,43 +1215,35 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	if(a1x1 > CKOP::BMP_WID - 1)
 	{
 		a1x1 = CKOP::BMP_WID - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT7, a1x1);
 	}
 	if(a1y1 > CKOP::BMP_HEI - 1)
 	{
 		a1y1 = CKOP::BMP_HEI - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT8, a1y1);
 	}
 	if(a1x2 > CKOP::BMP_WID - 1)
 	{	
 		a1x2 = CKOP::BMP_WID - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT9, a1x2);
 	}
 	if(a1y2 > CKOP::BMP_HEI - 1)
 	{
 		a1y2 = CKOP::BMP_HEI - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT10, a1y2);
 	}
 
 	if(a1x1 < 1)
 	{
 		a1x1 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT7, a1x1);
 	}
 	if(a1y1 < 1)
 	{
 		a1y1 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT8, a1y1);
 	}
 	if(a1x2 < 1)
 	{
 		a1x2 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT9, a1x2);
 	}
 	if(a1y2 < 1)
 	{
 		a1y2 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT10, a1y2);
 	}
 
 	int		ret;
@@ -1274,7 +1265,6 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	if(subCount == 0)
 	{
 		subCount = 1;//0œŽZ‰ñ”ð
-		pWndForm->SetDlgItemInt(IDC_EDIT20, subCount);
 	}
 	else if(subCount > CKOP::BMP_WID)
 	{
@@ -1355,43 +1345,35 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	if(a2x1 > CKOP::BMP_WID - 1)
 	{
 		a2x1 = CKOP::BMP_WID - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT11, a2x1);
 	}
 	if(a2y1 > CKOP::BMP_HEI - 1)
 	{
 		a2y1 = CKOP::BMP_HEI - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT12, a2y1);
 	}
 	if(a2x2 > CKOP::BMP_WID - 1)
 	{	
 		a2x2 = CKOP::BMP_WID - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT13, a2x2);
 	}
 	if(a2y2 > CKOP::BMP_HEI - 1)
 	{
 		a2y2 = CKOP::BMP_HEI - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT14, a2y2);
 	}
 
 	if(a2x1 < 1)
 	{
 		a2x1 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT11, a2x1);
 	}
 	if(a2y1 < 1)
 	{
 		a2y1 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT12, a2y1);
 	}
 	if(a2x2 < 1)
 	{
 		a2x2 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT13, a2x2);
 	}
 	if(a2y2 < 1)
 	{
 		a2y2 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT14, a2y2);
 	}
 
 	max = -1, min = 256;
@@ -1477,43 +1459,35 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	if(a3x1 > CKOP::BMP_WID - 1)
 	{
 		a3x1 = CKOP::BMP_WID - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT11, a3x1);
 	}
 	if(a3y1 > CKOP::BMP_HEI - 1)
 	{
 		a3y1 = CKOP::BMP_HEI - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT12, a3y1);
 	}
 	if(a3x2 > CKOP::BMP_WID - 1)
 	{	
 		a3x2 = CKOP::BMP_WID - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT13, a3x2);
 	}
 	if(a3y2 > CKOP::BMP_HEI - 1)
 	{
 		a3y2 = CKOP::BMP_HEI - 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT14, a3y2);
 	}
 
 	if(a3x1 < 1)
 	{
 		a3x1 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT11, a3x1);
 	}
 	if(a3y1 < 1)
 	{
 		a3y1 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT12, a3y1);
 	}
 	if(a3x2 < 1)
 	{
 		a3x2 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT13, a3x2);
 	}
 	if(a3y2 < 1)
 	{
 		a3y2 = 1;
-		pWndForm->SetDlgItemInt(IDC_EDIT14, a3y2);
 	}
 
 	max = -1, min = 256;
@@ -2301,7 +2275,7 @@ BOOL CKOP_SHADING_EX::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra,
 			{
 				CCSV	csv;
 				SET_CSV(&csv);
-				CKOP::SAVE_CSV(&csv, "shadingEx.csv");
+				CKOP::SAVE_CSV(pWndForm, &csv, "shadingEx.csv");
 			}
 #endif
 			return(TRUE);

@@ -770,7 +770,7 @@ BOOL CKOP_CIRCLE::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX
 			{
 				CCSV	csv;
 				SET_CSV(&csv);
-				CKOP::SAVE_CSV(&csv, "center.csv");
+				CKOP::SAVE_CSV(pWndForm, &csv, "center.csv");
 			}
 #endif
 			return(TRUE);

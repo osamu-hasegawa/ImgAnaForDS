@@ -1171,14 +1171,20 @@ void CKOP::SAVE_WINDOW(CWnd *pWnd, LPCTSTR pszFileName)
 	::MessageBeep(MB_OK);
 }
 #if 1//2017.07.18
-void CKOP::SAVE_CSV(CCSV *p, LPCTSTR pszFileName)
+void CKOP::SAVE_CSV(CWnd *pWnd, CCSV *p, LPCTSTR pszFileName)
 {
 	CString	path(G_SS.SAVE_DIR);
 
 	if (path.Right(1) != "\\") {
 		path += "\\";
 	}
+#if 0//change 18/12/13(–Ø) 08:39:30
 	path += CKOP::SERIALNO;
+#else
+	CString buf;
+	pWnd->GetDlgItemText(IDC_EDIT19, buf);
+	path += buf;
+#endif
 	path += "_";
 	path += pszFileName;
 

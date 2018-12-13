@@ -1219,7 +1219,7 @@ BOOL CKOP_MTF::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_CM
 			{
 				CCSV	csv;
 				SET_CSV(&csv);
-				CKOP::SAVE_CSV(&csv, "mtf.csv");
+				CKOP::SAVE_CSV(pWndForm, &csv, "mtf.csv");
 			}
 #endif
 			return(TRUE);

@@ -610,7 +610,7 @@ BOOL CKOP_SCALE::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_
 			{
 				CCSV	csv;
 				SET_CSV(&csv);
-				CKOP::SAVE_CSV(&csv, "mag.csv");
+				CKOP::SAVE_CSV(pWndForm, &csv, "mag.csv");
 			}
 #endif
 			return(TRUE);
