@@ -1031,8 +1031,6 @@ void CALC_SHADING_CROSS(LPBYTE pImgPxl, CWnd *pWndForm)
 	int		y1, y2, x1, x2;
 
 	max = -1, min = 256;
-	ttl = 0.0;
-	cnt = 0;
 
 	y1 = m_d.P_SKIPCNT;
 	y2 = CKOP::BMP_HEI - m_d.P_SKIPCNT;
@@ -1056,6 +1054,8 @@ void CALC_SHADING_CROSS(LPBYTE pImgPxl, CWnd *pWndForm)
 //対角:(0,0) -> (BMP_WID,BMP_HEI);　緑線
 	while(subNum < subCount)
 	{
+		ttl = 0.0;
+		cnt = 0;
 		int upperlimit = 0;
 		if(subNum != (subCount - 1))//最後以外
 		{
@@ -1094,6 +1094,13 @@ void CALC_SHADING_CROSS(LPBYTE pImgPxl, CWnd *pWndForm)
 		R_SHD_POS1[subNum] = (max-avg)/avg * 100;
 		R_SHD_NEG1[subNum] = (min-avg)/avg * 100;
 
+		TRACE("Cross Area1:subnum=%d, max=%d, min=%d, avg=%2.1f\n",
+		subNum,
+		max,
+		min,
+		avg
+		);
+
 		subNum++;
 	}
 
@@ -1120,10 +1127,10 @@ void CALC_SHADING_CROSS(LPBYTE pImgPxl, CWnd *pWndForm)
 
 //対角:(0,BMP_HEI) -> (BMP_WID,0);　赤線
 	subNum = 0;
-	cnt = 0;
-	ttl = 0.0;
 	while(subNum < subCount)
 	{
+		ttl = 0.0;
+		cnt = 0;
 		int upperlimit = 0;
 		if(subNum != (subCount - 1))//最後以外
 		{
@@ -1162,6 +1169,13 @@ void CALC_SHADING_CROSS(LPBYTE pImgPxl, CWnd *pWndForm)
 		R_SHD_AVG2[subNum] = avg;
 		R_SHD_POS2[subNum] = (max-avg)/avg * 100;
 		R_SHD_NEG2[subNum] = (min-avg)/avg * 100;
+
+		TRACE("Cross Area2:subnum=%d, max=%d, min=%d, avg=%2.1f\n",
+		subNum,
+		max,
+		min,
+		avg
+		);
 
 		subNum++;
 	}
@@ -1253,8 +1267,6 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	int		y1, y2, x1, x2;
 
 	max = -1, min = 256;
-	ttl = 0.0;
-	cnt = 0;
 
 	y1 = a1y1;
 	y2 = a1y2 - a1y1;
@@ -1276,6 +1288,8 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	int subNum = 0;
 	while(subNum < subCount)
 	{
+		ttl = 0.0;
+		cnt = 0;
 		for(int y = y1; y <= (y1 + y2); y++)//細切れ単位で解析
 		{
 			int upperlimit = 0;
@@ -1312,6 +1326,13 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 		R_SHD_AVG1[subNum] = avg;
 		R_SHD_POS1[subNum] = (max-avg)/avg * 100;
 		R_SHD_NEG1[subNum] = (min-avg)/avg * 100;
+
+		TRACE("Horizon Area1:subnum=%d, max=%d, min=%d, avg=%2.1f\n",
+		subNum,
+		max,
+		min,
+		avg
+		);
 
 		subNum++;
 	}
@@ -1377,8 +1398,6 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	}
 
 	max = -1, min = 256;
-	ttl = 0.0;
-	cnt = 0;
 
 	y1 = a2y1;
 	y2 = a2y2 - a2y1;
@@ -1389,6 +1408,8 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	subNum = 0;
 	while(subNum < subCount)
 	{
+		ttl = 0.0;
+		cnt = 0;
 		for(int y = y1; y <= (y1 + y2); y++)//細切れ単位で解析
 		{
 			int upperlimit = 0;
@@ -1425,6 +1446,13 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 		R_SHD_AVG2[subNum] = avg;
 		R_SHD_POS2[subNum] = (max-avg)/avg * 100;
 		R_SHD_NEG2[subNum] = (min-avg)/avg * 100;
+
+		TRACE("Horizon Area2:subnum=%d, max=%d, min=%d, avg=%2.1f\n",
+		subNum,
+		max,
+		min,
+		avg
+		);
 
 		subNum++;
 	}
@@ -1491,8 +1519,6 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	}
 
 	max = -1, min = 256;
-	ttl = 0.0;
-	cnt = 0;
 
 	y1 = a3y1;
 	y2 = a3y2 - a3y1;
@@ -1503,6 +1529,8 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 	subNum = 0;
 	while(subNum < subCount)
 	{
+		ttl = 0.0;
+		cnt = 0;
 		for(int y = y1; y <= (y1 + y2); y++)//細切れ単位で解析
 		{
 			int upperlimit = 0;
@@ -1539,6 +1567,13 @@ void CALC_SHADING_HORIZON(LPBYTE pImgPxl, CWnd *pWndForm)
 		R_SHD_AVG3[subNum] = avg;
 		R_SHD_POS3[subNum] = (max-avg)/avg * 100;
 		R_SHD_NEG3[subNum] = (min-avg)/avg * 100;
+
+		TRACE("Horizon Area3:subnum=%d, max=%d, min=%d, avg=%2.1f\n",
+		subNum,
+		max,
+		min,
+		avg
+		);
 
 		subNum++;
 	}
