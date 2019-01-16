@@ -44,7 +44,7 @@ public:
 	static
 	void TIMER_PROC(CWnd* pWndForm);
 	static
-	void SAVE_STG_RESULT(void);
+	void SAVE_STG_RESULT(CWnd* pWndForm);
 	static
 	void STORE_STG_RESULT(void);
 #endif

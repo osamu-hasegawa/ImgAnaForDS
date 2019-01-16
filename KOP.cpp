@@ -1192,14 +1192,20 @@ void CKOP::SAVE_CSV(CWnd *pWnd, CCSV *p, LPCTSTR pszFileName)
 }
 #endif
 #if 1//2018.05.01
-void CKOP::SAVEADD_CSV(CCSV *p, LPCTSTR pszFileName)
+void CKOP::SAVEADD_CSV(CWnd *pWnd, CCSV *p, LPCTSTR pszFileName)
 {
 	CString	path(G_SS.SAVE_DIR);
 
 	if (path.Right(1) != "\\") {
 		path += "\\";
 	}
+#if 0//change 19/01/16(…) 11:47:43
 	path += CKOP::SERIALNO;
+#else
+	CString buf;
+	pWnd->GetDlgItemText(IDC_EDIT19, buf);
+	path += buf;
+#endif
 	path += "_";
 	path += pszFileName;
 

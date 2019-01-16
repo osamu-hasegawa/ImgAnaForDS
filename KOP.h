@@ -230,7 +230,7 @@ public:
 #endif
 #if 1//2018.05.01
 	static
-	void SAVEADD_CSV(CCSV *p, LPCTSTR pszFileName);
+	void SAVEADD_CSV(CWnd *pWnd, CCSV *p, LPCTSTR pszFileName);
 #endif
 	static
 	void ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo);

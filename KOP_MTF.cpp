@@ -1697,7 +1697,7 @@ void CKOP_MTF::TIMER_PROC(CWnd* pWndForm)
 		else {
 			//òAë±ë™íË
 			STG::MOVE_ABS(1, 0);
-			SAVE_STG_RESULT();
+			SAVE_STG_RESULT(pWndForm);
 		}
 		m_s.STG_STAT = 0;
 		CKOP::DLG_PRG.DestroyWindow();
@@ -1735,7 +1735,7 @@ void CKOP_MTF::STORE_STG_RESULT(void)
 		m_s.GET_TRIG = 0;
 	}
 }
-void CKOP_MTF::SAVE_STG_RESULT(void)
+void CKOP_MTF::SAVE_STG_RESULT(CWnd* pWndForm)
 {
 	CCSV	csv;
 	CCSV	*pc = &csv;
@@ -1910,6 +1910,6 @@ void CKOP_MTF::SAVE_STG_RESULT(void)
 	//---
 	pc->set(0, r, "");//1çsãÛÇØÇÈ
 	//---
-	CKOP::SAVEADD_CSV(&csv, "mtf_stg.csv");
+	CKOP::SAVEADD_CSV(pWndForm, &csv, "mtf_stg.csv");
 }
 #endif

@@ -1082,7 +1082,7 @@ void CKOP_CIRCLE::TIMER_PROC(CWnd* pWndForm)
 		else {
 			//˜A‘±‘ª’è
 			STG::MOVE_ABS(1, 0);
-			SAVE_STG_RESULT();
+			SAVE_STG_RESULT(pWndForm);
 		}
 		m_s.STG_STAT = 0;
 		CKOP::DLG_PRG.DestroyWindow();
@@ -1108,7 +1108,7 @@ void CKOP_CIRCLE::STORE_STG_RESULT(void)
 		m_s.GET_TRIG = 0;
 	}
 }
-void CKOP_CIRCLE::SAVE_STG_RESULT(void)
+void CKOP_CIRCLE::SAVE_STG_RESULT(CWnd* pWndForm)
 {
 	CCSV	csv;
 	CCSV	*pc = &csv;
@@ -1152,6 +1152,6 @@ void CKOP_CIRCLE::SAVE_STG_RESULT(void)
 		}
 	}
 	//---
-	CKOP::SAVEADD_CSV(&csv, "center_stg.csv");
+	CKOP::SAVEADD_CSV(pWndForm, &csv, "center_stg.csv");
 }
 #endif
