@@ -11,6 +11,7 @@
 #include "KOP_SHADING.h"
 #include "KOP_SHADING_EX.h"
 #include "KOP_CIRCLE.h"
+#include "KOP_CIRCLE_EX.h"
 #include "KOP_SCALE.h"
 #include "KOP_MTF.h"
 #include "KOP_TVD.h"
@@ -81,6 +82,9 @@ BYTE	CKOP::IMG_DEF[2448*2048*4];
 
 
 CPen	CKOP::m_penBlue;
+CPen	CKOP::m_penOrange;
+CPen	CKOP::m_penBrown;
+CPen	CKOP::m_penViolet;
 
 CBitmap	CKOP::BMP_DEF;
 CBrush	CKOP::m_brsBack;
@@ -266,7 +270,7 @@ void CKOP::CREATE_FORM(CWnd *pWnd, LPCTBL pct, LPITBL pit)
 		}
 		else if ((nID >= IDC_STATIC1 && nID <=
 #if 1//2017.04.01
-			IDC_STATIC60
+			IDC_STATIC108
 #else
 			IDC_STATIC40
 #endif
@@ -425,6 +429,7 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 	case 7: CKOP_ROLL   ::TERM_FORM(); break;
 #endif
 	case 8: CKOP_SHADING_EX::TERM_FORM(); break;
+	case 9: CKOP_CIRCLE_EX ::TERM_FORM(); break;
 	}
 	if (CKOP::STAT_OF_ANALYSE > 0) {
 	CKOP::DESTROY_FORM(pWndForm);
@@ -470,6 +475,10 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 		pct = CKOP_SHADING_EX::ctbl;
 		pit = CKOP_SHADING_EX::itbl;
 	break;
+	case 9:
+		pct = CKOP_CIRCLE_EX::ctbl;
+		pit = CKOP_CIRCLE_EX::itbl;
+	break;
 	}
 	//----------
 	if (CKOP::STAT_OF_ANALYSE <= 0) {
@@ -513,6 +522,9 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 	break;
 	case 8:
 		CKOP_SHADING_EX::INIT_FORM(pWndForm);
+	break;
+	case 9:
+		CKOP_CIRCLE_EX::INIT_FORM(pWndForm);
 	break;
 #endif
 	}
@@ -871,6 +883,15 @@ void CKOP::PRESET(CWnd* pWndForm)
 		m_penBlue.DeleteObject();
 	}
 #endif
+	if (m_penOrange.GetSafeHandle()) {
+		m_penOrange.DeleteObject();
+	}
+	if (m_penBrown.GetSafeHandle()) {
+		m_penBrown.DeleteObject();
+	}
+	if (m_penViolet.GetSafeHandle()) {
+		m_penViolet.DeleteObject();
+	}
 
 	if (m_penYellow.GetSafeHandle()) {
 		m_penYellow.DeleteObject();
@@ -896,6 +917,9 @@ void CKOP::PRESET(CWnd* pWndForm)
 	//20160427 Hirota add to draw blue line.(Graph) Start
 	m_penBlue     .CreatePen(PS_SOLID, 1 , RGB(0,0,255));
 	//20160427 Hirota add to draw blue line.(Graph) End
+	m_penOrange  .CreatePen(PS_SOLID, 1 , RGB(255,127,0));
+	m_penBrown   .CreatePen(PS_SOLID, 1 , RGB(152,38,0));
+	m_penViolet  .CreatePen(PS_SOLID, 1 , RGB(127,0,255));
 
 	m_penRed     .CreatePen(PS_SOLID, 1 , RGB(255,0,0));
 	m_penGreen   .CreatePen(PS_SOLID, 1 , RGB(0,255,0));
@@ -1251,6 +1275,9 @@ void CKOP::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo)
 	case 8://シェーディング画面拡張
 		CKOP_SHADING_EX::ON_DRAW_STA(pWndForm,  pImgPxl, pbmpinfo);
 	break;
+	case 9://円の重心と面積
+		CKOP_CIRCLE_EX::ON_DRAW_STA(pWndForm,  pImgPxl, pbmpinfo);
+	break;
 	default://OpenCVテスト画面
 	break;
 	}
@@ -1297,6 +1324,9 @@ void CKOP::ON_DRAW_END(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo)
 	case 8://シェーディング画面拡張
 		CKOP_SHADING_EX::ON_DRAW_END(pWndForm,  pImgPxl, pbmpinfo);
 	break;
+	case 9://円の重心と面積
+		CKOP_CIRCLE_EX::ON_DRAW_END(pWndForm,  pImgPxl, pbmpinfo);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 }
@@ -1339,6 +1369,9 @@ BOOL CKOP::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_CMDHAN
 	case 8:
 		ret = CKOP_SHADING_EX::CMD_MSG(pWndForm, nID, nCode, pExtra, pHandlerInfo);
 	break;
+	case 9://円の重心と面積
+		ret = CKOP_CIRCLE_EX::CMD_MSG(pWndForm, nID, nCode, pExtra, pHandlerInfo);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 	return(ret);
@@ -1380,6 +1413,9 @@ BOOL CKOP::MSG_PROC(CWnd* pWndForm, MSG* pMsg)
 	case 8:
 		ret = CKOP_SHADING_EX::MSG_PROC(pWndForm, pMsg);
 	break;
+	case 9://円の重心と面積
+		ret = CKOP_CIRCLE_EX::MSG_PROC(pWndForm, pMsg);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 	return(ret);
@@ -1409,6 +1445,9 @@ HBRUSH CKOP::CTL_COLOR(CDC *pDC, CWnd* pWnd)
 	switch (CKOP::STAT_OF_ANALYSE) {
 	case 8:
 		ret = CKOP_SHADING_EX::CTL_COLOR(pDC, pWnd);
+	break;
+	case 9:
+		ret = CKOP_CIRCLE_EX::CTL_COLOR(pDC, pWnd);
 	break;
 	case 10:
 //		ret = CKOP_3DMAIN::CTL_COLOR(pDC, pWnd);
@@ -1440,6 +1479,9 @@ void CKOP::TIMER_PROC(CWnd* pWndForm)
 	break;
 	case 5:
 		CKOP_MTF   ::TIMER_PROC(pWndForm);
+	break;
+	case 9://円の重心と面積
+		CKOP_CIRCLE_EX::TIMER_PROC(pWndForm);
 	break;
 	case 10:
 //		CKOP_3DMAIN::TIMER_PROC(pWndForm);

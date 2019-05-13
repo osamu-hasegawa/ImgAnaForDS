@@ -118,6 +118,12 @@ public:
 	static
 	CPen	m_penWater;
 	static
+	CPen	m_penOrange;
+	static
+	CPen	m_penBrown;
+	static
+	CPen	m_penViolet;
+	static
 	CPen	m_penRedDot;
 	static
 	CPen	m_penGreenDot;
