@@ -216,6 +216,7 @@
   <ItemGroup>
     <ClInclude Include="DlgProgress.h" />
     <ClInclude Include="KOP_CIRCLE_EX.h" />
+    <ClInclude Include="KOP_CIRCLE_OP.h" />
     <ClInclude Include="KOP_ROLL.h" />
     <ClInclude Include="KOP_SHADING_EX.h" />
     <ClInclude Include="PluginDll.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="KOP.cpp" />
     <ClCompile Include="KOP_CIRCLE.cpp" />
     <ClCompile Include="KOP_CIRCLE_EX.cpp" />
+    <ClCompile Include="KOP_CIRCLE_OP.cpp" />
     <ClCompile Include="KOP_DEBUG.cpp" />
     <ClCompile Include="KOP_MENU.cpp" />
     <ClCompile Include="KOP_MTF.cpp" />

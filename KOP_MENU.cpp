@@ -50,6 +50,7 @@ CTBL CKOP_MENU::ctbl[] = {
 #endif
 	{ 0, 0  , IDC_BUTTON4 , 0, "面積＆重心"        , 990, 250, 140, 70},
 	{ 0, 0  , IDC_BUTTON39, 0, "面積＆重心拡張"    ,1140, 250, 140, 70},
+	{ 0, 0  , IDC_BUTTON38, 0, "面積＆重心ｵﾌﾟｼｮﾝ"  ,1140, 330, 140, 70},
 	{ 0, 0  , IDC_BUTTON5 , 0, "ディストーション"  , 990, 330, 140, 70},
 #if 1//2017.04.01
 	{ 0, 0  , IDC_BUTTON7 , 0, "カメラ傾き"        , 990, 410, 140, 70},
@@ -433,6 +434,10 @@ BOOL CKOP_MENU::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_C
 		break;*/
 		case IDC_BUTTON40://シェーディング解析拡張
 			CKOP::MOVE_FORM(pWndForm, 8);
+			return(TRUE);
+		break;
+		case IDC_BUTTON38://面積＆重心ｵﾌﾟｼｮﾝ
+			CKOP::MOVE_FORM(pWndForm, 10);
 			return(TRUE);
 		break;
 		}

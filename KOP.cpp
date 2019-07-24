@@ -12,6 +12,7 @@
 #include "KOP_SHADING_EX.h"
 #include "KOP_CIRCLE.h"
 #include "KOP_CIRCLE_EX.h"
+#include "KOP_CIRCLE_OP.h"
 #include "KOP_SCALE.h"
 #include "KOP_MTF.h"
 #include "KOP_TVD.h"
@@ -430,6 +431,7 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 #endif
 	case 8: CKOP_SHADING_EX::TERM_FORM(); break;
 	case 9: CKOP_CIRCLE_EX ::TERM_FORM(); break;
+	case 10: CKOP_CIRCLE_OP ::TERM_FORM(); break;
 	}
 	if (CKOP::STAT_OF_ANALYSE > 0) {
 	CKOP::DESTROY_FORM(pWndForm);
@@ -479,6 +481,10 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 		pct = CKOP_CIRCLE_EX::ctbl;
 		pit = CKOP_CIRCLE_EX::itbl;
 	break;
+	case 10:
+		pct = CKOP_CIRCLE_OP::ctbl;
+		pit = CKOP_CIRCLE_OP::itbl;
+	break;
 	}
 	//----------
 	if (CKOP::STAT_OF_ANALYSE <= 0) {
@@ -525,6 +531,9 @@ void CKOP::MOVE_FORM(CWnd* pWndForm, int iNextPage)	//@@20160517 Hirota ここで機
 	break;
 	case 9:
 		CKOP_CIRCLE_EX::INIT_FORM(pWndForm);
+	break;
+	case 10:
+		CKOP_CIRCLE_OP::INIT_FORM(pWndForm);
 	break;
 #endif
 	}
@@ -1278,6 +1287,9 @@ void CKOP::ON_DRAW_STA(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo)
 	case 9://円の重心と面積
 		CKOP_CIRCLE_EX::ON_DRAW_STA(pWndForm,  pImgPxl, pbmpinfo);
 	break;
+	case 10://円の重心と面積
+		CKOP_CIRCLE_OP::ON_DRAW_STA(pWndForm,  pImgPxl, pbmpinfo);
+	break;
 	default://OpenCVテスト画面
 	break;
 	}
@@ -1327,6 +1339,9 @@ void CKOP::ON_DRAW_END(CWnd *pWndForm, LPBYTE pImgPxl, LPBITMAPINFO pbmpinfo)
 	case 9://円の重心と面積
 		CKOP_CIRCLE_EX::ON_DRAW_END(pWndForm,  pImgPxl, pbmpinfo);
 	break;
+	case 10://円の重心と面積
+		CKOP_CIRCLE_OP::ON_DRAW_END(pWndForm,  pImgPxl, pbmpinfo);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 }
@@ -1372,6 +1387,9 @@ BOOL CKOP::CMD_MSG(CWnd* pWndForm, UINT nID, int nCode, void* pExtra, AFX_CMDHAN
 	case 9://円の重心と面積
 		ret = CKOP_CIRCLE_EX::CMD_MSG(pWndForm, nID, nCode, pExtra, pHandlerInfo);
 	break;
+	case 10://円の重心と面積
+		ret = CKOP_CIRCLE_OP::CMD_MSG(pWndForm, nID, nCode, pExtra, pHandlerInfo);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 	return(ret);
@@ -1416,6 +1434,9 @@ BOOL CKOP::MSG_PROC(CWnd* pWndForm, MSG* pMsg)
 	case 9://円の重心と面積
 		ret = CKOP_CIRCLE_EX::MSG_PROC(pWndForm, pMsg);
 	break;
+	case 10://円の重心と面積
+		ret = CKOP_CIRCLE_OP::MSG_PROC(pWndForm, pMsg);
+	break;
 	}
 	STAT_OF_DISPATCH = 0;
 	return(ret);
@@ -1450,7 +1471,7 @@ HBRUSH CKOP::CTL_COLOR(CDC *pDC, CWnd* pWnd)
 		ret = CKOP_CIRCLE_EX::CTL_COLOR(pDC, pWnd);
 	break;
 	case 10:
-//		ret = CKOP_3DMAIN::CTL_COLOR(pDC, pWnd);
+		ret = CKOP_CIRCLE_OP::CTL_COLOR(pDC, pWnd);
 	break;
 	case 11:
 //		ret = CKOP_3DSETT::CTL_COLOR(pDC, pWnd);
@@ -1484,6 +1505,7 @@ void CKOP::TIMER_PROC(CWnd* pWndForm)
 		CKOP_CIRCLE_EX::TIMER_PROC(pWndForm);
 	break;
 	case 10:
+		CKOP_CIRCLE_OP::TIMER_PROC(pWndForm);
 //		CKOP_3DMAIN::TIMER_PROC(pWndForm);
 	break;
 	case 11:

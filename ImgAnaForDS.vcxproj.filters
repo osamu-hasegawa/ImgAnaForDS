@@ -168,6 +168,9 @@
     <ClInclude Include="KOP_CIRCLE_EX.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="KOP_CIRCLE_OP.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ImgAnaForDS.cpp">
@@ -258,6 +261,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="KOP_CIRCLE_EX.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="KOP_CIRCLE_OP.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
